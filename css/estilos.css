@@ -1,0 +1,527 @@
+:root{
+    --colorPrimario: #CC7952;
+    --colorSecundario: #E5BD77;
+    --secundarioClaro: #DFD0BB;
+    --colorBase:#F5F5F5;
+    --colorIcons: #414141;
+
+}
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box; /* Hack para Box Model **/ 
+}
+body {
+     font-size: 16px;/* 1rem = 10px  */
+     padding-bottom: 8rem;
+     min-height: 100vh;
+}
+.sombra{ 
+    box-shadow: 0px 5px 15px 0px rgba(130,122,130,0.57);
+    background-color: rgba(255, 255, 255, 0.674);
+} /* agregar sombras */
+.landing{
+    background-color: var(--colorIcons);
+}
+.blanco{
+    background-color: var(--colorBase);
+}
+
+h1{
+    font-size: 3.8rem;
+}
+
+h2{
+    font-size: 2.8rem;
+}
+
+h3{
+    font-size: 1.9rem;
+}
+.flex{
+    display: flex;
+    justify-content: space-between;
+}
+/* LANDING */
+/* HEADER LANDING*/
+.head{
+    background-image: url(../img/Fast\ Food.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 37rem;
+    position: relative;
+    margin-bottom: 4rem;
+}
+.head-sombra{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(57, 46, 46, 0.41);
+}
+.head-logo{
+    position: absolute;
+    padding: .2rem;
+    border-radius: 1rem;
+    top: 2rem;
+    left: 10rem;
+    width: 16rem;
+    height: 5rem;
+    background-color: #b7a38799;
+}
+.head-btn{
+    position: absolute;
+    left: 22rem;
+    top: 27rem;
+    font-size: 1.4rem;
+    font-weight: bold;
+    padding: .7rem;
+    border-radius: 2rem 0 2rem 0;
+    background-image: linear-gradient(to right, var(--colorPrimario) 0%, var(--colorSecundario) 100%);
+    border: none;
+}
+.head-descripcion{
+    position: absolute;
+    top: 16rem;
+    left: 22rem;
+    color: var(--colorBase);
+    width: 15.5rem;
+}
+
+/* INFORMACION LANGDING*/
+.contenido{
+    margin: 0 auto;
+    width: 95%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr) ;
+    column-gap: 1rem;
+    row-gap: 1rem;
+}
+.contenido-tarjeta{
+    margin: 0 auto;
+    text-align: center;
+    color: var(--colorIcons);
+    width: 16rem;
+    height: 15rem;
+    background-color: var(--secundarioClaro);
+    border-radius: 1rem;
+}
+.iconos{
+    margin: 1.2rem 0;
+    font-size: 3rem;
+}
+.contenido-texto{
+    font-size: 1.1rem;
+    margin: 0 .2rem;
+}
+.contenido-texto-titulo{
+    font-weight: bold;
+}
+/* FIN LANDING */
+
+/* BARRA NAVEGACION*/
+.menu{
+    position: fixed;
+    z-index: 100;
+    bottom: 0;
+    background-color: var(--colorPrimario);
+    width: 100%;
+    height: 6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--colorIcons);
+    padding: 1rem 2rem;
+    font-size: 2rem;
+}
+a{
+    text-decoration: none;
+    color: var(--colorIcons);
+}
+
+/* RESTAURANTES */
+/* nav */
+nav{
+    display: flex;
+    font-size: 2.5rem;
+    justify-content: space-between;
+    padding: 2rem 1rem;
+    align-items: center;
+    color: var(--colorPrimario);
+}
+.logo-nav{
+    width: 14rem;
+    height: 4rem;
+}
+/* RESTAURANTES */
+.contenedor{
+    margin: 8rem auto;
+    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 1rem;
+    row-gap: 1rem;
+}
+.tarjeta{
+    background-color: white;
+    margin: 0 auto;
+    width: 16rem;
+    height: 16.4rem;
+    border-radius: 2rem;
+    position: relative;
+}
+.tarjeta-logo{
+    position: absolute;
+    left: 3.5rem;
+    bottom: 11rem;
+    background-color: white;
+    width: 60%;
+    height: 56%;
+    border-radius: 3rem;
+    padding: .5rem;  
+}
+.descripcion{
+    text-align: center;
+    margin-top: 6rem;
+}
+.descripcion-nombre{
+    font-size: 1.8rem;
+}
+.estrellas{
+    color: var(--colorPrimario);
+}
+.fa-circle-right{
+    font-size: 2rem;
+    margin-top: 1rem;
+}
+/* CATEGORIAS */
+.categoria-cart{
+    color: var(--colorPrimario);
+    float: right;
+    font-size: 3rem;
+    margin-top: 2rem;
+    margin-right: 2rem;
+}
+.restaurante{
+    position: relative;
+    width: 35%;
+    height: 100vh;
+    background-color: var(--colorPrimario);
+    background-image: linear-gradient(to top, var(--colorSecundario) 0%, var(--colorPrimario) 100%);
+}
+.restaurante-logo{
+    position: absolute;
+    margin-top: 7rem;
+    width: 9rem;
+    height:9rem;
+    background-color: var(--colorBase);
+    left: 2rem;
+    top: 2.3rem;
+    border-radius: 2rem;
+}
+/* TARJETAS */
+.contenedor-categorias{
+    position: absolute;
+    top: 20rem;
+    left: 8rem;
+}
+.categoria-tarjeta{
+    position: relative;
+    width: 28rem;
+    height: 8rem;
+    background-color: white;
+    border-radius: 1.5rem;
+    margin-top: 2rem;
+}
+.categoria-tarteja-img{
+    position: absolute;
+    top: .5rem;
+    right: 23rem;
+    width: 8rem;
+    height: 7rem;
+    border-radius: 3rem;
+}
+.categoria-tarjeta-texto{
+    position: absolute;
+    top: 1rem;
+    left: 6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 20rem;
+}
+.categoria-textoDescripcion{
+    display: flex;
+    flex-direction: column;
+}
+.categoria-siguiente{
+    margin-bottom: 1rem;
+}
+
+/* Fin Categorias */
+
+/* Productos */
+.productos{
+    margin: 1rem auto;
+    width: 34rem;
+}
+.producto-tarjeta{
+    margin-bottom: 2rem;
+    height: 14rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+}
+.producto-detalle{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 2rem;
+    gap: 1rem;
+}
+.producto-nombre{
+    font-size: 2.5rem;
+    color: var(--colorIcons);
+}
+.producto-precio{
+    font-size: 2rem;
+    color: var(--colorPrimario);
+}
+.producto-imagen{
+    height: 100%;
+    width: 16rem;
+}
+/* Fin Producto */
+
+/* Producto Detalle */
+.detalle-producto-contenedor{
+    margin: 0 auto;
+    width: 90%;
+    text-align: center;
+}
+.producto-d-img{
+    border-radius: 2rem;
+    width: 100%;
+    height: 28rem;
+}
+.detalle-descripcion{
+    font-size: 1.2rem;
+    text-align: justify;
+}
+.detalle-formulario{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 3rem;
+}
+.detalle-cantidad{
+    display: flex;
+    flex-direction: column;
+}
+.detalle-cantidad-n{
+    font-size: 1.5rem;
+    background-color: var(--secundarioClaro);
+    text-align: center;
+    width: 10rem;
+}
+.detalle-precio{
+    color: var(--colorPrimario);
+}
+.contenedor-botones{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8rem;
+}
+.detalle-btn{
+    width: 15rem;
+    height: 4.5rem;
+    background-image: linear-gradient(to right, var(--colorPrimario) 0%, var(--colorSecundario) 100%);
+    border-radius: 2rem;
+    border-style: none;
+    padding: 1rem;
+    font-size: 1.6rem;
+    color: var(--colorBase);
+}
+.btn-cart{
+    font-size: 2rem;
+    color: var(--colorPrimario);
+}
+/* Fin detalle */
+
+/* Carrito */
+.modal-content{
+    background-color: var(--colorBase);
+}
+.producto-carrito{
+    margin-bottom: 2rem;
+    padding: 1rem;
+    height: 10rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+}
+.producto-nombre-carrito{
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--colorIcons);
+}
+.producto-carrito-imagen{
+    height: 100%;
+    width: 12rem;
+    border-radius: 1rem;
+}
+.precio-carrito{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4.5rem;
+}
+.carrito-compra{
+    margin-left: 2rem;
+    width: 50%;
+    text-align: start;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.carrito-btn{
+    width: 15rem;
+    height: 4.5rem;
+    background-color: #64b75b;
+    border-radius: 1rem 0 1rem 1rem;
+    border-style: none;
+    padding: 1rem;
+    font-size: 1.6rem;
+    color: var(--colorBase);
+}
+/* LOGIN */
+.login-logo{
+    width: 100%;
+    height: 8rem;
+}
+.contenedor-img{
+    margin: 0 auto;
+    width: 28rem;
+}
+.contenedor-formulario{
+    position: relative;
+    margin: 2rem auto;
+    height: 46rem;
+    width: 29rem;
+    background-color: white;
+    border-radius: 2rem;
+}
+.navegacion{
+    position: absolute;
+    left: 1.5rem;
+    top: 3rem;
+    width: 90%;
+    height: 5rem;
+    background-color: #ACABAB;
+    border-radius: 2rem;
+}
+.navegacion-btn{
+    position: absolute;
+    background-color: var(--colorPrimario);
+    width: 14rem;
+    height: 5rem;
+    border-radius: 2rem;
+}
+.navegacion-text{
+    position: absolute;
+    top: 1rem;
+    left: 16rem;
+    color: var(--colorBase);
+}
+.navegacion-text-2{
+    position: absolute;
+    top: 1rem;
+    left: 3rem;
+    color: var(--colorBase);
+}
+.login-formulario{
+    position: absolute;
+    top: 15rem;
+    left: 4rem;
+    width: 21rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.login-form{
+    width: 18rem;
+    padding: 1rem;
+    font-size: 1rem;
+    border: none;
+}
+.login-icons{
+    font-size: 2rem;
+    color: var(--colorPrimario);
+    margin-top: 1rem;
+}
+hr{
+    margin: none;
+}
+.btn-login{
+    position: absolute;
+    top: 37rem;
+    left: 4.6rem;
+    width: 20rem;
+    border-radius: 2rem;
+    color: var(--colorBase);
+    font-size: 2rem;
+    height: 5rem;
+    background-image: linear-gradient(to top, var(--colorPrimario) 0%, var(--colorSecundario) 100%);
+    border: none;
+}
+/* FIN Login */
+/* LOGOUT */
+.logout-formulario{
+    position: absolute;
+    top: 15rem;
+    left: 4rem;
+    width: 21rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.contenedor-formulario-logout{
+    position: relative;
+    margin: 2rem auto;
+    height: 59.6rem;
+    width: 29rem;
+    background-color: white;
+    border-radius: 2rem;
+}
+.btn-logout{
+    position: absolute;
+    top: 50rem;
+    left: 4.6rem;
+    width: 20rem;
+    border-radius: 2rem;
+    color: var(--colorBase);
+    font-size: 2rem;
+    height: 5rem;
+    background-image: linear-gradient(to top, var(--colorPrimario) 0%, var(--colorSecundario) 100%);
+    border: none;
+}
+.navegacion-btn-logout{
+    position: absolute;
+    left: 12rem;
+    background-color: var(--colorPrimario);
+    width: 14rem;
+    height: 5rem;
+    border-radius: 2rem;
+}
+.navegacion-text-logout{
+    position: absolute;
+    top: 1rem;
+    left: 2rem;
+    color: var(--colorBase);
+}
+.navegacion-text-2-logout{
+    position: absolute;
+    top: 1rem;
+    left: 4rem;
+    color: var(--colorBase);
+}
