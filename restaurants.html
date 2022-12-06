@@ -68,9 +68,9 @@
             </div>
             <div class="modal-body"> 
                 
-                <div class="productos">
+                <div class="productos" id="carrito">
 
-                    <div class="producto-carrito">
+                    <!-- <div class="producto-carrito">
                         <div ><a href="producto-detalle.html"><img class="producto-carrito-imagen" src="img/producto/1.webp" alt="..."></a></div>
                         <div class="producto-detalle">
                             <div class="producto-nombre-carrito">Whooper</div>
@@ -92,11 +92,11 @@
                             <i class="fa-solid fa-trash"></i>
                             <div class="producto-cantidad">L.400.00</div>
                         </div>
-                    </div>
+                    </div> -->
    
                 </div>
 
-                <div class="carrito-compra">
+                <div class="carrito-compra" id="detalle-pedido">
                     <h4>SubTotal</h4>
                     <h4>L.650.00</h4>
                     <h4>ISV</h4>
@@ -109,7 +109,7 @@
 
                 <div class="contenedor-botones ">
                     <button class="carrito-btn btn">Pagar Pedido</button>
-                    <button class="carrito-btn btn" style="background-color:#d43e39 ;">Cancelar Pedido</button>
+                    <button class="carrito-btn btn" style="background-color:#d43e39 ;" onclick="cancelarPedido()">Cancelar Pedido</button>
                 </div>  
         
             </div>

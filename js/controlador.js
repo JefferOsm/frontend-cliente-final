@@ -4,6 +4,10 @@ let categories;
 let product;
 let detalleProducto;
 
+//variables carrito
+let carrito;
+
+
 
 //Funcionalidad par obtener Restaurantes
 const cargarRestaurantes= async()=>{
@@ -12,7 +16,7 @@ const cargarRestaurantes= async()=>{
 
     })
     empresas= await respuesta.json();
-    console.log("Empresas", empresas) ;
+    //console.log("Empresas", empresas) ;
 }
 
 
@@ -62,7 +66,7 @@ const cargarCategorias= async(idEmpresa)=>{
 
     })
     categories= await respuesta.json();
-    console.log("Categorias", categories) ;
+    //console.log("Categorias", categories) ;
     generarCategorias(categories);
 }
 
@@ -104,7 +108,7 @@ const cargarProductos = async (idCategoria, idEmpresa)=>{
     })
     product= await respuesta.json()
     generarProductos(product, idEmpresa);
-    console.log('productos', product);
+    //console.log('productos', product);
 }
 
 
@@ -139,19 +143,23 @@ const cargarProductos = async (idCategoria, idEmpresa)=>{
 }
 //Fin Productos
 
+
+//Detalle Productos
+
 const cargarDetalleProducto= async(idProducto, idCategoria, idEmpresa,nombreCategoria)=>{
     const respuesta= await fetch(`http://localhost:3000/productos/${idProducto}`,{
         method: 'GET'
     })
     detalleProducto= await respuesta.json();
     generarDetalleProducto(detalleProducto,idCategoria,idEmpresa,nombreCategoria)
-    console.log(detalleProducto);
+    //console.log(detalleProducto);
     
 }
 
 
 function generarDetalleProducto(producto, categoria, empresa,header){
     //LIMPIAR
+    document.getElementById('carrito').innerHTML='';
     document.getElementById('contenedor-categorias').style.display='none';
     document.getElementById('restaurantes').style.display='none';
     document.getElementById('restaurantes-text').style.display='none';
@@ -165,7 +173,7 @@ function generarDetalleProducto(producto, categoria, empresa,header){
     document.getElementById('restaurantes-nav').innerHTML+=
     `<div><btn onclick="cargarProductos('${categoria}','${empresa}')"   style="color:#CC7952 ;"><i class="fa-solid fa-circle-arrow-left"></i></btn></div>
     <div style="color:black ;">${header}</div>
-    <button type="button" class="btn btn-cart" data-bs-toggle="modal" data-bs-target="#modal-carrito"><i class="fa-solid fa-cart-shopping" ></i></button>`;
+    <button type="button" class="btn btn-cart" data-bs-toggle="modal" data-bs-target="#modal-carrito" onclick="cargarCompras()" ><i class="fa-solid fa-cart-shopping" ></i></button>`;
     document.getElementById('restaurantes-nav').style.display='flex';
 
         //Generar Detalle
@@ -177,7 +185,7 @@ function generarDetalleProducto(producto, categoria, empresa,header){
     <div class="detalle-formulario">
         <div class="detalle-cantidad">
             <h3>Cantidad</h3>
-            <input type="number" class="form-control form-control-sm detalle-cantidad-n">
+            <input type="number" class="form-control form-control-sm detalle-cantidad-n" id="txt-cantidad">
         </div>
         
         <h2 class="detalle-precio">L.${producto.precio}</h2>
@@ -185,13 +193,110 @@ function generarDetalleProducto(producto, categoria, empresa,header){
 
     <div class="contenedor-botones ">
     <button class="detalle-btn btn">Comprar Ahora</button>
-    <button class="detalle-btn btn" >Agregar al Carrito</button>
+    <button class="detalle-btn btn" onclick="nuevoProducto('${producto._id}','${producto.nombreProducto}','${producto.precio}','${producto.imgProducto}')"  >Agregar al Carrito</button>
     </div>
 `;
-
+//Fin detalle Productos
 
 
 }
 
+//Funciones del carrito
+const cargarCompras= async()=>{
+    const respuesta= await fetch(`http://localhost:3000/compras`,{
+        method: 'GET'
+    })
+    carrito= await respuesta.json();
+    
+    console.log('prosuctos', carrito);
+    cargarCarrito(carrito);
+}
 
+function cargarCarrito(producto){
+    let precios=0;
+    let cantidad=0;
+    let subTotal=0;
+    let isv=0;
+    let total=0;
+    let envio=50;
+    producto.forEach(function(item){
+        document.getElementById('carrito').innerHTML+=
+        `
+        <div class="producto-carrito">
+            <div ><a href="producto-detalle.html"><img class="producto-carrito-imagen" src="${item.img}" alt="..."></a></div>
+            <div class="producto-detalle">
+                <div class="producto-nombre-carrito">${item.nombre}</div>
+                <div class="producto-cantidad">Cantidad: ${item.cantidad}</div>
+            </div>
+            <div class="precio-carrito">
+                <i class="fa-solid fa-trash" onclick="borrarProducto('${item._id}')"></i>
+                <div class="producto-cantidad">L.${item.precio}</div>
+            </div>
+        </div>
+        `;
+        console.log(item.precio);
+        cantidad+=parseFloat(item.cantidad);
+        subTotal+=(parseFloat(item.precio)*parseFloat(item.cantidad));
+        console.log('item',precios);
+    })
+
+    
+    isv=subTotal*0.15;
+    total= subTotal+isv+envio;
+
+    document.getElementById('detalle-pedido').innerHTML=
+    `
+    <h4>SubTotal</h4>
+    <h4>L.${subTotal}</h4>
+    <h4>ISV</h4>
+    <h4>L.${isv}</h4>
+    <h4>Envio</h4>
+    <h4> L.${envio}</h4>
+    <h3>Total</h3>
+    <h3>L.${total}</h3>
+    `;
+}
+
+const nuevoProducto= async(idProducto,nombreProducto,precioProducto,imagenProducto)=>{
+    let cantidad= document.getElementById('txt-cantidad').value;
+    let compra=
+    {
+        idProducto: idProducto,
+        nombre: nombreProducto,
+        precio: precioProducto,
+        cantidad: cantidad,
+        img:imagenProducto
+    }
+
+    const respuesta= await fetch('http://localhost:3000/compras',
+    {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(compra)
+    }
+    )
+}
+
+
+const borrarProducto= async(id)=>{
+    const respuesta= await fetch(`http://localhost:3000/compras/${id}`,
+    {
+        method: 'DELETE'
+    }
+    );
+    document.getElementById('carrito').innerHTML='';
+    cargarCompras();
+}
+const cancelarPedido= async()=>{
+    const respuesta= await fetch(`http://localhost:3000/compras`,
+    {
+        method: 'DELETE'
+    }
+    );
+    document.getElementById('carrito').innerHTML='';
+    cargarCompras();
+}
 
