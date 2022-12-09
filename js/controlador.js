@@ -4,8 +4,39 @@ let categories;
 let product;
 let detalleProducto;
 
+
 //variables carrito
 let carrito;
+let envio=0;
+
+
+//variables ordenes
+nombreCliente=nombre;
+let direccion;
+let latitud;
+let longitud;
+let totalProductos;
+let productos=[];
+let totalPago;
+console.log(String(nombreCliente));
+
+//obtener ubicacion
+if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(({coords})=>{
+        direccion= {
+            latitud: coords.latitude,
+            longitud: coords.longitude
+        }
+        latitud=direccion.latitud;
+        longitud=direccion.longitud;
+        //console.log(direccion);
+    },()=>{
+        alert('localizacion no disponible'); 
+    })
+}else{
+    alert('localizacion no disponible');
+}
+
 
 
 
@@ -125,7 +156,7 @@ const cargarProductos = async (idCategoria, idEmpresa)=>{
     document.getElementById('restaurantes-nav').innerHTML+=
     `<div><btn onclick="cargarCategorias('${empresa}')"   style="color:#CC7952 ;"><i class="fa-solid fa-circle-arrow-left"></i></btn></div>
     <div style="color:black ;">${categoria.nombreCategoria}</div>
-    <button type="button" class="btn btn-cart" data-bs-toggle="modal" data-bs-target="#modal-carrito"><i class="fa-solid fa-cart-shopping" ></i></button>`;
+    <button type="button" class="btn btn-cart" data-bs-toggle="modal" data-bs-target="#modal-carrito"><i class="fa-solid fa-cart-shopping"  id="btnCart" ></i></button>`;
     document.getElementById('restaurantes-nav').style.display='flex';
     //RENDERIZAR
     document.getElementById('contenedorProductos').style.display='block';
@@ -140,6 +171,7 @@ const cargarProductos = async (idCategoria, idEmpresa)=>{
          </div>`;
 
     });
+
 }
 //Fin Productos
 
@@ -173,7 +205,7 @@ function generarDetalleProducto(producto, categoria, empresa,header){
     document.getElementById('restaurantes-nav').innerHTML+=
     `<div><btn onclick="cargarProductos('${categoria}','${empresa}')"   style="color:#CC7952 ;"><i class="fa-solid fa-circle-arrow-left"></i></btn></div>
     <div style="color:black ;">${header}</div>
-    <button type="button" class="btn btn-cart" data-bs-toggle="modal" data-bs-target="#modal-carrito" onclick="cargarCompras()" ><i class="fa-solid fa-cart-shopping" ></i></button>`;
+    <button type="button" class="btn btn-cart" data-bs-toggle="modal" data-bs-target="#modal-carrito" onclick="cargarCompras()" ><i class="fa-solid fa-cart-shopping" id="btnCart"></i></button>`;
     document.getElementById('restaurantes-nav').style.display='flex';
 
         //Generar Detalle
@@ -192,7 +224,6 @@ function generarDetalleProducto(producto, categoria, empresa,header){
     </div>
 
     <div class="contenedor-botones ">
-    <button class="detalle-btn btn">Comprar Ahora</button>
     <button class="detalle-btn btn" onclick="nuevoProducto('${producto._id}','${producto.nombreProducto}','${producto.precio}','${producto.imgProducto}')"  >Agregar al Carrito</button>
     </div>
 `;
@@ -208,18 +239,18 @@ const cargarCompras= async()=>{
     })
     carrito= await respuesta.json();
     
-    console.log('prosuctos', carrito);
+    //console.log('productos', carrito);
     cargarCarrito(carrito);
 }
 
 function cargarCarrito(producto){
+    document.getElementById('carrito').innerHTML=''
     let precios=0;
     let cantidad=0;
     let subTotal=0;
     let isv=0;
     let total=0;
-    let envio=50;
-    producto.forEach(function(item){
+    producto.forEach(function(item,i){
         document.getElementById('carrito').innerHTML+=
         `
         <div class="producto-carrito">
@@ -229,20 +260,32 @@ function cargarCarrito(producto){
                 <div class="producto-cantidad">Cantidad: ${item.cantidad}</div>
             </div>
             <div class="precio-carrito">
-                <i class="fa-solid fa-trash" onclick="borrarProducto('${item._id}')"></i>
+                <i class="fa-solid fa-trash" onclick="borrarProducto('${item._id}','${i}')"></i>
                 <div class="producto-cantidad">L.${item.precio}</div>
             </div>
         </div>
         `;
-        console.log(item.precio);
+       // console.log(item.precio);
         cantidad+=parseFloat(item.cantidad);
         subTotal+=(parseFloat(item.precio)*parseFloat(item.cantidad));
-        console.log('item',precios);
+        productos[i]={
+            nombre: item.nombre,
+            cantidad:item.cantidad,
+            precio:item.precio
+        };
+        //console.log('item',precios);
     })
 
-    
+  
+    //calculos
     isv=subTotal*0.15;
     total= subTotal+isv+envio;
+    envio=50;
+
+    //enviar a orden
+    totalProductos=cantidad;
+    totalPago= total;
+
 
     document.getElementById('detalle-pedido').innerHTML=
     `
@@ -277,11 +320,13 @@ const nuevoProducto= async(idProducto,nombreProducto,precioProducto,imagenProduc
         },
         body: JSON.stringify(compra)
     }
-    )
+    );
+    window.alert(`${cantidad} ${nombreProducto} agregados al carrito`)
+
 }
 
 
-const borrarProducto= async(id)=>{
+const borrarProducto= async(id,i)=>{
     const respuesta= await fetch(`http://localhost:3000/compras/${id}`,
     {
         method: 'DELETE'
@@ -289,6 +334,7 @@ const borrarProducto= async(id)=>{
     );
     document.getElementById('carrito').innerHTML='';
     cargarCompras();
+    productos.splice(i,1);
 }
 const cancelarPedido= async()=>{
     const respuesta= await fetch(`http://localhost:3000/compras`,
@@ -298,5 +344,86 @@ const cancelarPedido= async()=>{
     );
     document.getElementById('carrito').innerHTML='';
     cargarCompras();
+    productos=[];
+    envio=0;
 }
 
+
+//Pagps
+function cargarPagos(){
+    //Limpiar
+    document.getElementById('carrito').innerHTML='';
+    document.getElementById('contenedor-categorias').style.display='none';
+    document.getElementById('restaurantes').style.display='none';
+    document.getElementById('restaurantes-text').style.display='none';
+    document.getElementById('contenedorProductos').style.display='none';
+    document.getElementById('contenedorProductos').innerHTML='';
+    document.getElementById('contenedor-detalle').style.display='none';
+    document.getElementById('contenedor-detalle').innerHTML='';
+    document.getElementById('restaurantes-nav').style.display='block';
+    document.getElementById('footer').style.display='none';
+    document.getElementById('restaurantes-nav').innerHTML='';
+    document.getElementById('restaurantes-nav').innerHTML+=
+    ` <div ><a href="index.html" style="color:#CC7952 ;"><i class="fa-solid fa-circle-arrow-left"></i></a></div>`;
+
+    document.getElementById('pagos').innerHTML=
+    `
+    <div class="contenedor-formulario-pagos">
+    <div class="pago-header">
+        <h3>Tipo de Tarjeta: </h3>
+        <div>
+            <i class="fa-brands fa-cc-visa credit-card"></i>
+            <i class="fa-brands fa-cc-mastercard credit-card"></i>
+            <i class="fa-brands fa-cc-amex credit-card"></i>
+        </div>
+    </div>
+    
+    <form class="pagos-formulario">
+        <div >
+            <input type="text" class="form-control pagos-form" placeholder="Numero de la Tarjeta">
+        </div>
+        <div >
+            <input type="text" class="form-control pagos-form" placeholder="Titular de la Trajeta">
+        </div>
+        <div class="flex">
+            <input type="text" class="form-control pagos-form form-exp" placeholder="Fecha de Expiracion">
+            <input type="text" class="form-control pagos-form form-cvc" placeholder="CVC">
+        </div>
+    </form>
+    <h3 class="pago-total">Total a Pagar: </h3>
+    <button class=" btn btn-pago" onclick="agregarOrden('${nombreCliente}','${latitud}','${longitud}','${totalProductos}','${totalPago}')" >Pagar Ahora</button>
+</div>
+    `;
+
+    console.log(productos);
+    console.log(totalPago);
+    console.log(totalProductos);
+    console.log(latitud, longitud);
+   
+}
+
+
+
+const agregarOrden= async(cliente,lat,lng,cantidadProductos,pago)=>{
+    let orden=
+    {
+        nombreCliente: cliente,
+        direccion:{latitud: lat, longitud:lng},
+        totalProductos: cantidadProductos,
+        productos: productos,
+        aceptado:0,
+        totalPago: pago,
+    }
+
+    const respuesta= await fetch('http://localhost:3000/ordenes',
+    {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(orden)
+    }
+    )
+    cancelarPedido();
+}

@@ -193,6 +193,10 @@ nav{
     font-size: 2rem;
     margin-top: 1rem;
 }
+.fa-circle-right:hover{
+    cursor: pointer;
+    font-size: 2.2rem;
+}
 /* CATEGORIAS */
 .categoria-cart{
     color: var(--colorPrimario);
@@ -290,6 +294,9 @@ nav{
 .producto-imagen{
     height: 100%;
     width: 16rem;
+}
+.producto-imagen:hover{
+    cursor: pointer;
 }
 /* Fin Producto */
 
@@ -524,4 +531,63 @@ hr{
     top: 1rem;
     left: 4rem;
     color: var(--colorBase);
+}
+
+/* Pagos */
+
+.contenedor-formulario-pagos{
+    position: relative;
+    margin: 2rem auto;
+    height: 54rem;
+    width: 32rem;
+    background-color: white;
+    border-radius: 2rem;
+}
+.pagos-formulario{
+    position: absolute;
+    top: 15rem;
+    left: 4rem;
+    width: 24rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.pagos-form{
+    font-size: 1.5rem;
+    text-align: center;
+    background-color: #dfd0bb;
+    color: var(--colorIcons);
+    margin-top: 1rem;
+
+}
+.form-cvc{
+    width: 8rem;
+}
+.form-exp{
+    width: 15rem;
+}
+.credit-card{
+    font-size: 5rem;
+    color: var(--colorIcons);
+}
+.pago-header{
+    position: absolute;
+    top: 4.5rem;
+    left: 4rem;
+}
+.btn-pago{
+    position: absolute;
+    top: 45rem;
+    left: 3.5rem;
+    width: 25rem;
+    color: var(--colorBase);
+    font-size: 2.5rem;
+    height: 5rem;
+    background-image: linear-gradient(to top, var(--colorPrimario) 0%, var(--colorSecundario) 100%);
+    border: none;
+}
+.pago-total{
+    position: absolute;
+    top: 42rem;
+    left: 4rem;
 }

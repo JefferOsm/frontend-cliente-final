@@ -18,7 +18,7 @@
     <div class="contenedor-img"><img class="login-logo" src="img/SpaceDeliveryLogo(1).png" alt=""></div>
 
     <!-- Formulario -->
-    <div class="contenedor-formulario">
+    <div class="contenedor-formulario" id="fomulario-login">
         <div class="navegacion">
             <div class="navegacion-btn"> <p class="navegacion-text-2">Iniciar Sesion</p></div>
             <a href="logout.html"><p class="navegacion-text">Registrar</p></a>
@@ -26,16 +26,16 @@
 
         <form class="login-formulario">
             <div class="flex">
-                <input type="text" class="form-control login-form" placeholder="E-Mail">
+                <input type="text" class="form-control login-form" placeholder="E-Mail" id="login-email">
                 <i class="fa-solid fa-envelope login-icons"></i>
             </div><hr>
             <div class="flex">
-                <input type="text" class="form-control login-form" placeholder="Contraseña">
+                <input type="text" class="form-control login-form" placeholder="Contraseña" id="login-password">
                 <i class="fa-solid fa-lock login-icons"></i>
             </div><hr>
         </form>
 
-        <a href="restaurants.html" class=" btn btn-login">Login</a>
+        <button type="submit" class=" btn btn-login" onclick="comprobarCliente()">Login</button>
     </div>
 
 
@@ -43,6 +43,9 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script src="js/profile.js"></script>
+<script src="js/logout.js"></script>
+<script src="js/login.js"></script>
 <script src="js/controlador.js"></script>
 </body>
 </html>
