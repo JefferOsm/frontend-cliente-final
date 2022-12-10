@@ -11,7 +11,7 @@ let envio=0;
 
 
 //variables ordenes
-nombreCliente=nombre;
+nombreCliente='Manuel';
 let direccion;
 let latitud;
 let longitud;
@@ -407,7 +407,7 @@ function cargarPagos(){
 const agregarOrden= async(cliente,lat,lng,cantidadProductos,pago)=>{
     let orden=
     {
-        nombreCliente: cliente,
+        nombreCliente: 'Jeffer Martinez',
         direccion:{latitud: lat, longitud:lng},
         totalProductos: cantidadProductos,
         productos: productos,
